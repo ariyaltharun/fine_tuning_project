@@ -1,4 +1,4 @@
-from fine_tuning_project.dataset.ImageDatasetLoader import ImageDatasetLoader
+from fine_tuning_project.dataset.DatasetLoader import ImageDatasetLoader
 from DatasetLoader import DatasetLoader
 class DatasetFactory:
     @staticmethod
