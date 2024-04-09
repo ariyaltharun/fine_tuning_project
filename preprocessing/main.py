@@ -7,6 +7,7 @@ def main():
         dataset = dataset_loader.get_dataset()
     except ValueError as e:
         print(f"Error: {e}")
+        return 
       
     splits = dataset.train_test_split(test_size=0.1)
     train_ds = splits["train"]
