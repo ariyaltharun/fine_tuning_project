@@ -1,4 +1,4 @@
-from PreprocessingFactor import ImagePreprocessor
+from PreprocessingFactory import ImagePreprocessor
 
 class PreprocessingLoader:
     def __init__(self, model_checkpoint):

@@ -1,7 +1,7 @@
 from dataset import DatasetFactory
-from PreprocessingLoader import PreprocessingLoader
-from ModelLoader import ModelFactory
-from trainFactory import TrainFactory
+from preprocessing.PreprocessingLoader import PreprocessingLoader
+from model.ModelLoader import ModelFactory
+from TrainFactory import TrainFactory
 from transformers import TrainingArguments
 import evaluate
 
