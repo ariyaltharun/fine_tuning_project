@@ -1,6 +1,8 @@
 from transformers import AutoTokenizer
-from transformers import AutoModelForImageClassification
-import dataset
+from transformers import (
+	AutoModelForImageClassification,
+	AutoModelForSequenceClassification
+)
 class ModelLoader:
   @staticmethod
   def load_tokenizer(model_type):
@@ -35,7 +37,23 @@ class ModelLoader:
             ignore_mismatched_sizes=True,
         )
       return model
-    
+    elif model_type == "bert":
+      model_name = "LiyaT3/sentiment-analysis-imdb-distilbert"
+      id2label = {
+        0: "Negative",
+        1: "Positive"
+      }
+      label2id = {
+        "Negative": 0,
+        "Positive": 1
+      }
+      model = AutoModelForSequenceClassification.from_pretrained(
+        model_name,
+        num_labels=2,
+        id2label=id2label,
+        label2id=label2id
+      )
+      return model
     else:
       raise ValueError(f"Unknown model type: {model_type}")
 
