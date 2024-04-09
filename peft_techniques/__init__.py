@@ -1,1 +1,1 @@
-from .main import LoRA
+from .LORA import LoRA

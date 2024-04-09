@@ -1,5 +1,4 @@
 from .DatasetLoader import (
-    DatasetLoader,
     ImageDatasetLoader,
     TextDatasetLoader
 )
@@ -7,7 +6,7 @@ from .DatasetLoader import (
 
 class DatasetFactory:
     @staticmethod
-    def get_dataset(model_type: str) -> DatasetLoader:
+    def get_dataset(model_type: str):
         if model_type == "vision_transformer":
             loader = ImageDatasetLoader()
             return loader.get_dataset()

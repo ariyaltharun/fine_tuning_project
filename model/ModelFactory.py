@@ -1,4 +1,4 @@
-from ModelLoader import ModelLoader
+from .ModelLoader import ModelLoader
 
 class ModelFactory:
   @staticmethod

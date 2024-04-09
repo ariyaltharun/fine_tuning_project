@@ -1,5 +1,5 @@
 from dataset import DatasetFactory
-from preprocessing.PreprocessingLoader import PreprocessingLoader
+from preprocessing.PreprocessingFactory import ImagePreprocessor
 from model.ModelLoader import ModelFactory
 from TrainFactory import TrainFactory
 from transformers import TrainingArguments
@@ -31,7 +31,7 @@ def main():
 
     # Load and apply preprocessing
     model_checkpoint = "google/vit-base-patch16-224-in21k"
-    preprocessing_loader = PreprocessingLoader(model_checkpoint)
+    preprocessing_loader = ImagePreprocessor(model_checkpoint)
     preprocessor = preprocessing_loader.get_preprocessor()
     train_ds.set_transform(preprocessor.preprocess_train)
     val_ds.set_transform(preprocessor.preprocess_val)

@@ -10,10 +10,11 @@ from train import TrainFactory
 model_checkpoint = 'LiyaT3/sentiment-analysis-imdb-distilbert'
 
 # Load Dataset
-dataset = DatasetFactory.get_sg247_bin_class_ds()
+dataset = DatasetFactory.get_dataset("bert")
 
 # Pre-Process
-tokenizer, datacollator, tokenized_dataset = PreprocessingFactory.get_text_preprocessor(dataset)
+preprocessor =  PreprocessingFactory(model_checkpoint)
+tokenizer, datacollator, tokenized_dataset = preprocessor.get_text_preprocessor(dataset)
 
 
 # Load Model
@@ -67,4 +68,5 @@ train = TrainFactory.get_trainer(
     data_collator=datacollator,
     compute_metrics=compute_metrics
 )
-train.trainer()
+
+train.train()
