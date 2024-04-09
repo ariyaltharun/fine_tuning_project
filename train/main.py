@@ -68,6 +68,7 @@ def main():
 
     # Start training
     train_results = trainer.train()
+    print(train_results)
     # Evaluate model
     evaluation_results = trainer.evaluate(val_ds)
     print(evaluation_results)
