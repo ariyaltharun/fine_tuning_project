@@ -1,2 +1,9 @@
 torch
 datasets
+transformers 
+accelerate 
+evaluate 
+datasets 
+peft
+numpy
+pandas
