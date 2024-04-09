@@ -1,35 +1,20 @@
-from transformers import AutoImageProcessor
-from torchvision.transforms import (
-    CenterCrop,
-    Compose,
-    Normalize,
-    RandomHorizontalFlip,
-    RandomResizedCrop,
-    Resize,
-    ToTensor,
+from datasets import DatasetDict
+from PreprocessingLoader import (
+    ImagePreprocessor,
+    TextPreprocessing
 )
 
-class ImagePreprocessor:
+class PreprocessingFactory:
     def __init__(self, model_checkpoint):
-        self.image_processor = AutoImageProcessor.from_pretrained(model_checkpoint)
-        self.normalize = Normalize(mean=self.image_processor.image_mean, std=self.image_processor.image_std)
-        self.train_transforms = Compose([
-            RandomResizedCrop(self.image_processor.size["height"]),
-            RandomHorizontalFlip(),
-            ToTensor(),
-            self.normalize,
-        ])
-        self.val_transforms = Compose([
-            Resize(self.image_processor.size["height"]),
-            CenterCrop(self.image_processor.size["height"]),
-            ToTensor(),
-            self.normalize,
-        ])
+        self.model_checkpoint = model_checkpoint
+        self.preprocessor = ImagePreprocessor(model_checkpoint)
 
-    def preprocess_train(self, example_batch):
-        example_batch["pixel_values"] = [self.train_transforms(image.convert("RGB")) for image in example_batch["image"]]
-        return example_batch
+    def get_preprocessor(self):
+        return self.preprocessor
 
-    def preprocess_val(self, example_batch):
-        example_batch["pixel_values"] = [self.val_transforms(image.convert("RGB")) for image in example_batch["image"]]
-        return example_batch
+    def get_text_preprocessor(self, dataset: DatasetDict):
+        preprocessing = TextPreprocessing(self.model_checkpoint)
+        tokenizer = preprocessing.get_tokenizer()
+        datacollator = preprocessing.get_data_collator()
+        tokenized_data = preprocessing.get_tokenized_dataset()
+        return (tokenizer, datacollator, tokenized_data)
