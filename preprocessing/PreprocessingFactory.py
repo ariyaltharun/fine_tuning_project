@@ -8,7 +8,7 @@ class PreprocessingFactory:
     def __init__(self, model_checkpoint):
         self.model_checkpoint = model_checkpoint
 
-    def get_preprocessor(self):
+    def get_image_preprocessor(self):
         return ImagePreprocessor(self.model_checkpoint)
 
     def get_text_preprocessor(self, dataset: DatasetDict):
