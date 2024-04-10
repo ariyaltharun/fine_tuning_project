@@ -1,2 +1,2 @@
-from HyperParameterFactory import HyperParameterFactory
-from HyperParameterSet import LoRAHyperParameterSet,QLoRAHyperParameterSet
+from .HyperParameterFactory import HyperParameterFactory
+from .HyperParameterSet import LoRAHyperParameterSet, QLoRAHyperParameterSet

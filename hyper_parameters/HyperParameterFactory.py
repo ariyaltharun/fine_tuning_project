@@ -1,4 +1,4 @@
-from HyperParameterSet import LoRAHyperParameterSet,QLoRAHyperParameterSet
+from .HyperParameterSet import LoRAHyperParameterSet,QLoRAHyperParameterSet
 
 class HyperParameterFactory:
     @staticmethod

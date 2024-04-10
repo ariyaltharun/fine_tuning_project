@@ -5,7 +5,7 @@ from transformers import (
 )
 class ModelLoader:
   @staticmethod
-  def load_tokenizer(model_type):
+  def load_tokenizer(model_type,dataset=None):
     """
     Loads a tokenizer corresponding to the specified model type.
 
@@ -17,12 +17,6 @@ class ModelLoader:
     """
 
     if model_type == "vision_transformer":
-      try:
-        dataset_loader = dataset.DatasetFactory.get_dataset(model_type)
-        dataset = dataset_loader.get_dataset()
-      except ValueError as e:
-        print(f"Error: {e}")
-
       model_name = "google/vit-base-patch16-224-in21k"
       labels = dataset.features["label"].names
       label2id, id2label = dict(), dict()

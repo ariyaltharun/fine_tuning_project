@@ -39,6 +39,13 @@ class ImagePreprocessor:
         example_batch["pixel_values"] = [self.val_transforms(image.convert("RGB")) for image in example_batch["image"]]
         return example_batch
 
+    def get_train_test_transform(self,dataset):
+        splits = dataset.train_test_split(test_size=0.1)
+        train_ds = splits["train"]
+        val_ds = splits["test"]
+        train_ds.set_transform(self.preprocess_train)
+        val_ds.set_transform(self.preprocess_val)
+        return train_ds, val_ds
 
 class TextPreprocessing:
     def __init__(self, model_checkpoint) -> None:

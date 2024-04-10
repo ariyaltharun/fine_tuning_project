@@ -2,7 +2,7 @@ from .ModelLoader import ModelLoader
 
 class ModelFactory:
   @staticmethod
-  def create(model_type, peft_params=None):
+  def create(model_type, dataset=None):
     """
     Creates a model instance based on the specified type and PEFT parameters.
 
@@ -15,7 +15,7 @@ class ModelFactory:
     """
 
     if model_type == "vision_transformer":
-      return ModelLoader.load_tokenizer(model_type)
+      return ModelLoader.load_tokenizer(model_type,dataset)
     elif model_type == "bert":
       return  ModelLoader.load_tokenizer(model_type)
     else:

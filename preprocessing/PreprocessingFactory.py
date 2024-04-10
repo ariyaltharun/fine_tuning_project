@@ -8,8 +8,10 @@ class PreprocessingFactory:
     def __init__(self, model_checkpoint):
         self.model_checkpoint = model_checkpoint
 
-    def get_image_preprocessor(self):
-        return ImagePreprocessor(self.model_checkpoint)
+    def get_image_preprocessor(self,dataset):
+        preprocessing = ImagePreprocessor(self.model_checkpoint)
+        train_ds, val_ds = preprocessing.get_train_test_transform(dataset)
+        return (train_ds, val_ds)
 
     def get_text_preprocessor(self, dataset: DatasetDict):
         preprocessing = TextPreprocessing(self.model_checkpoint)
