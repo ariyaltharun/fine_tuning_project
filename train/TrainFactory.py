@@ -1,4 +1,4 @@
-from TrainLoader import TrainLoader
+from .TrainLoader import TrainLoader
 
 class TrainFactory:
     @staticmethod

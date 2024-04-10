@@ -1,5 +1,5 @@
 from dataset import DatasetFactory
-from PreprocessingLoader import PreprocessingLoader
+from preprocessing.PreprocessingFactory import PreprocessingLoader
 
 def main():
     try:

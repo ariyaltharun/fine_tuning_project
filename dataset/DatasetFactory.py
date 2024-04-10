@@ -1,10 +1,17 @@
-from fine_tuning_project.dataset.DatasetLoader import ImageDatasetLoader
-from DatasetLoader import DatasetLoader
+from .DatasetLoader import (
+    ImageDatasetLoader,
+    TextDatasetLoader
+)
+
+
 class DatasetFactory:
     @staticmethod
-    def get_dataset(model_type: str) -> DatasetLoader:
+    def get_dataset(model_type: str):
         if model_type == "vision_transformer":
             loader = ImageDatasetLoader()
+            return loader.get_dataset()
+        elif model_type == "bert":
+            loader = TextDatasetLoader("sg247/binary-classification")
             return loader.get_dataset()
         else:
             raise ValueError("Unknown model type")
