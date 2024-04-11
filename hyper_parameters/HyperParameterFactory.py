@@ -8,5 +8,6 @@ class HyperParameterFactory:
         else:
             raise ValueError("Unknown Peft Technique name provided.")
 
-    def get_general_parameters(self,params):
+    @staticmethod
+    def get_general_parameters(params):
         return GenHyperParameterSet.get_parameters(params)
