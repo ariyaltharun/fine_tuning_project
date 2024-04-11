@@ -8,7 +8,7 @@ import preprocessing
 
 model_name = "vision_transformer"
 model_checkpoint = "google/vit-base-patch16-224-in21k"
-data = dataset.DatasetFactory.get_dataset(model)
+data = dataset.DatasetFactory.get_dataset(model_name)
 parameter = {
             "r": 16,
             "lora_alpha": 16,

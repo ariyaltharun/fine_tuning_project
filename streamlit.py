@@ -1,11 +1,17 @@
 import streamlit as st
+import dataset
+import model
+import hyper_parameters
+import train
+import preprocessing
+
 
 st.title("Model Training Configuration")
 
 
 st.header("Model Configuration")
 
-model_name = st.selectbox("Select the Model", ["","BERT", "Vision_Transformer"])
+model_name = st.selectbox("Select the Model", ["","BERT", "vision_transformer"])
 
 
 type_of_fine_tuning = st.selectbox("Select the type of fine method", ["","LoRA", "QLoRA","Without_Peft"])
@@ -34,7 +40,11 @@ if model_name == "BERT":
     if train:
         pass
 
-if model_name == "Vision_Transformer":
+if model_name == "vision_transformer":
+
+    model_checkpoint = "google/vit-base-patch16-224-in21k"
+    data = dataset.DatasetFactory.get_dataset(model)
+    
     st.subheader("Vision Transformers Model Parameters")
     freeze_weights = st.checkbox("Freeze Model Weights")
     num_train_epochs = st.number_input("Number of Training Epochs", value=3, min_value=1)
