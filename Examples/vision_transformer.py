@@ -5,7 +5,7 @@ import model
 import hyper_parameters
 import train
 import preprocessing
-
+import peft_techniques
 model_name = "vision_transformer"
 model_checkpoint = "google/vit-base-patch16-224-in21k"
 data = dataset.DatasetFactory.get_dataset(model_name)
@@ -36,9 +36,17 @@ train_ds, val_ds = processor.get_image_preprocessor(data)
 # This we have to add to the peft_techniques
 # --------------------------------------------------------------------------------
 
+#check this.. since there is sep file for loraconfig 
 from peft import LoraConfig, get_peft_model
+lora_config= peft_techniques.LoRA.loadConfig(peft_params)
+for key, value in peft_params.items():
+    if hasattr(lora_config, key): 
+        setattr(lora_config, key, value)
+lora_model=get_peft_model(vision_model, lora_config)
 
-config = LoraConfig()
+
+#---------------------------------------------------------------------------------
+from peft import LoraConfig, get_peft_model
 for key, value in parameter.items():
     if hasattr(config, key): 
         setattr(config, key, value)
