@@ -1,6 +1,7 @@
 from transformers import Trainer
 import torch
 import evaluate
+import numpy as np
 
 metric = evaluate.load("accuracy")
 

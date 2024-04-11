@@ -1,4 +1,4 @@
-from .HyperParameterSet import LoRAHyperParameterSet,QLoRAHyperParameterSet
+from .HyperParameterSet import LoRAHyperParameterSet,QLoRAHyperParameterSet,GenHyperParameterSet
 
 class HyperParameterFactory:
     @staticmethod
@@ -9,4 +9,4 @@ class HyperParameterFactory:
             raise ValueError("Unknown Peft Technique name provided.")
 
     def get_general_parameters(self,params):
-        return params
+        return GenHyperParameterSet.get_parameters(params)
