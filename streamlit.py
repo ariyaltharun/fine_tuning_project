@@ -10,12 +10,57 @@ st.title("Model Training Configuration")
 
 st.header("Model Configuration")
 
-model_name = st.selectbox("Select the Model", ["","BERT", "vision_transformer"])
+model_name = st.selectbox("Select the Model", ["", "BERT", "Vision Transformer"])
 
-type_of_fine_tuning = st.selectbox("Select the type of fine-tuning method", ["","LoRA", "QLoRA","Without_Peft"])
+type_of_fine_tuning = st.selectbox("Select the type of fine-tuning method", ["", "LoRA", "QLoRA", "Without Peft"])
 
 if model_name == "BERT":
-    pass
+    st.subheader("BERT Model Parameters")
+    num_train_epochs = st.number_input("Number of Training Epochs", value=3, min_value=1)
+    per_device_train_batch_size = st.number_input("Batch Size for Training", value=8, min_value=1)
+    learning_rate = st.number_input("Learning Rate", value=0.001, min_value=0.0001, step=0.001)
+    
+    if type_of_fine_tuning == "LoRA":
+        lora_alpha = st.number_input("LoRA Alpha", value=32, min_value=1)
+        lora_dropout = st.number_input("LoRA Dropout", value=0.01)
+        r = st.number_input("Rank (R)", value=4, min_value=1)
+        target_modules = ["q_lin", "k_lin"]
+
+        train_button = st.button("Start Training")
+        
+        if train_button:
+            with st.spinner("Training in progress..."):
+                data = dataset.DatasetFactory.get_dataset("bert")
+                parameter = {
+                    "r": r,
+                    "lora_alpha": lora_alpha,
+                    "lora_dropout": lora_dropout,
+                    "target_modules": target_modules,
+                }
+                gen_params = {
+                    "batch_size": per_device_train_batch_size,
+                    "learning_rate": learning_rate,
+                    "num_train_epochs": num_train_epochs,
+                }
+
+                peft_params = hyper_parameters.HyperParameterFactory.get_peft_parameters("lora", parameter)
+                general_params = hyper_parameters.HyperParameterFactory.get_general_parameters(gen_params)
+
+                bert_model = model.ModelFactory.create("bert", data)
+                processor = preprocessing.PreprocessingFactory("bert-base-uncased")
+                train_ds, val_ds = processor.get_text_preprocessor(data)
+
+                lora_model = peft_techniques.PeftFactory.create_peft_method(bert_model, peft_params)
+
+                args = hyper_parameters.HyperParameterFactory.get_general_parameters(general_params)
+
+                trainer = train.TrainFactory.get_trainer(bert_model, args, train_ds, val_ds, processor)
+                train_results = trainer.train()
+                validation_results = trainer.evaluate(val_ds)
+
+                st.success("Training completed!")
+                st.write("Training Results:", train_results)
+                st.write("Validation Results:", validation_results)
 
 if model_name == "vision_transformer":
     st.subheader("Vision Transformers Model Parameters")
