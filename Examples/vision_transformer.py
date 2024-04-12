@@ -35,7 +35,7 @@ lora_model = peft_techniques.PeftFactory.create_peft_method("LoRA", peft_params)
 
 args = hyper_parameters.HyperParameterFactory.get_general_parameters(general_params)
 
-trainer = train.TrainFactory.get_trainer(model,args,train_ds,val_ds,processor)
+trainer = train.TrainFactory.get_trainer(vision_model,args,train_ds,val_ds,processor)
 train_results = trainer.train()
 validation_results = trainer.evaluate(val_ds)
 
