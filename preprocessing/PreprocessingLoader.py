@@ -1,9 +1,10 @@
-from datasets import DatasetDict
+from datasets import DatasetDict, Value
 from transformers import (
     AutoImageProcessor,
     AutoTokenizer,
     DataCollatorWithPadding
 )
+
 from torchvision.transforms import (
     CenterCrop,
     Compose,
@@ -65,6 +66,17 @@ class TextPreprocessing:
         return data_collator
     
     def get_tokenized_dataset(self, dataset: DatasetDict) -> DatasetDict:
+        # The model we use accepts label dtype `int`
+        dataset = dataset.cast_column('label', Value(dtype='int32'))
+
+        # Filter NULL/None rows in the dataset
+        def remove_null(x):
+            if x['tweet'] is not None and x['label'] is not None:
+                return x
+            return None
+
+        dataset = dataset.filter(remove_null)
+
         if self.tokenizer.pad_token is None:
             self.tokenizer.add_special_tokens({'pad_token': '[PAD]'})
             # model.resize_token_embeddings(len(tokenizer))
