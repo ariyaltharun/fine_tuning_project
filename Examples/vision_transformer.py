@@ -17,6 +17,7 @@ parameter = {
             "bias": "none",
         }
 gen_params = {
+            "model": model_name,
             "batch_size": 128,
             "learning_rate": 0.01,
             "num_train_epochs": 2,
