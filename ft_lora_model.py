@@ -63,4 +63,4 @@ trainer = train.TrainFactory.get_trainer_bert(model,args,tokenized_dataset["trai
 train_results = trainer.train()
 
 #evaluation
-validation_results = trainer.evaluate(tokenized_dataset["train"])
+validation_results = trainer.evaluate(tokenized_dataset["test"])
