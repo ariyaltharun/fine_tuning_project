@@ -17,6 +17,7 @@ parameter = {
             "bias": "none",
         }
 gen_params = {
+            "model": model_name,
             "batch_size": 128,
             "learning_rate": 0.01,
             "num_train_epochs": 2,
@@ -30,11 +31,11 @@ vision_model = model.ModelFactory.create(model_name, data)
 processor = preprocessing.PreprocessingFactory(model_checkpoint)
 train_ds, val_ds = processor.get_image_preprocessor(data)
 
-lora_model = peft_techniques.PeftFactory.create_peft_method(vision_model, peft_params)
+lora_model = peft_techniques.PeftFactory.create_peft_method("LoRA", peft_params)
 
 args = hyper_parameters.HyperParameterFactory.get_general_parameters(general_params)
 
-trainer = train.TrainFactory.get_trainer(model,args,train_ds,val_ds,processor)
+trainer = train.TrainFactory.get_trainer(vision_model,args,train_ds,val_ds,processor)
 train_results = trainer.train()
 validation_results = trainer.evaluate(val_ds)
 
