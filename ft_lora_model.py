@@ -11,8 +11,7 @@ import hyper_parameters
 import train
 import model
 import dataset
-import sys
-sys.path.append('/home/pooja/code/hpe/fine_tuning_project-1')
+
 import peft_techniques
 
 model_checkpoint = 'LiyaT3/sentiment-analysis-imdb-distilbert'
@@ -28,21 +27,27 @@ tokenizer, datacollator, tokenized_dataset = preprocessor.get_text_preprocessor(
 # Load Model
 model = ModelFactory.create("bert")
 
+
+lora_config = {
+    'task_type':"SEQ_CLS",
+    'rank':4,
+    'lora_alpha':32,
+    'lora_dropout':0.01,
+    'target_modules':['q_lin','k_lin']
+}
+
 # LoRA model
 lora_config = LoRA.loadPeftConfig(
-    task_type="SEQ_CLS",
-    rank=4,
-    lora_alpha=32,
-    lora_dropout=0.01,
-    target_modules=['q_lin','k_lin']
+    lora_config
 )
-lora_model = LoRA.loadModel(
+lora_model = LoRA.loadPeftModel(
     model, 
     lora_config
 )
 
 ## Hyper Param
 gen_params = {
+    "model": model_checkpoint,
             "batch_size": 32,
             "learning_rate": 0.01,
             "num_train_epochs": 5,
@@ -51,8 +56,10 @@ general_params = hyper_parameters.HyperParameterFactory.get_general_parameters(g
 print(general_params)
 args = hyper_parameters.HyperParameterFactory.get_general_parameters(general_params)
 
+# Compute matrix
+
 #training
-trainer = train.TrainFactory.get_trainer(model,args,tokenized_dataset["train"],tokenized_dataset["train"],tokenizer,datacollator)
+trainer = train.TrainFactory.get_trainer_bert(model,args,tokenized_dataset["train"],tokenized_dataset["test"],tokenizer,datacollator)
 train_results = trainer.train()
 
 #evaluation

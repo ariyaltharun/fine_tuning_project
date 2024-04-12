@@ -19,7 +19,7 @@ class TrainLoader:
 
     def __init__(self, model, args, train_dataset, eval_dataset, tokenizer):
         args = TrainingArguments(
-             f"{args["model"]}-finetuned-lora-food101",
+             f"{args['model']}-finetuned-lora-food101",
             remove_unused_columns=False,
             evaluation_strategy="epoch",
             save_strategy="epoch",
@@ -53,7 +53,7 @@ class TrainLoader:
     def get_trainer(self):
         return self.trainer
     
-class TrainLoderbert:
+class TrainLoaderbert:
     @staticmethod
     def compute_metrics(eval_pred):
         accuracy = evaluate.load("accuracy")
@@ -61,9 +61,32 @@ class TrainLoderbert:
         predictions = np.argmax(predictions, axis=1)
         return accuracy.compute(predictions=predictions, references=labels)
 
- 
-
+    
     def __init__(self, model, args, train_dataset, eval_dataset, tokenizer,data_collator):
+        # args = TrainingArguments(
+        #      f"{args['model']}-finetuned-lora",
+        #     evaluation_strategy="epoch",
+        #     save_strategy="epoch",
+        #     learning_rate=args["learning_rate"],
+        #     per_device_train_batch_size=args["batch_size"],
+        #     per_device_eval_batch_size=args["batch_size"],
+        #     num_train_epochs=args["num_train_epochs"],
+        #     logging_steps=10,
+        #     load_best_model_at_end=True,
+        #     metric_for_best_model="accuracy",
+        #     label_names=["labels"],
+        # )
+        args = TrainingArguments(
+            output_dir= args['model']+"-lora-text-classification",
+            learning_rate=args["learning_rate"],
+            per_device_train_batch_size=args["batch_size"],
+            per_device_eval_batch_size=args["batch_size"],
+            num_train_epochs=args["num_train_epochs"],
+            weight_decay=0.01,
+            evaluation_strategy="epoch",
+            save_strategy="epoch",
+            load_best_model_at_end=True,
+        )
         self.trainer = Trainer(
             model=model,
             args=args,
