@@ -15,6 +15,6 @@ class PeftFactory:
             raise ValueError(f"PEFT method '{method_name}' not recognized")
 
     @staticmethod
-    def create_peft_method(method_name: str, config: Dict) -> PEFT:
-        peft_method_class = PeftFactory.get_peft_method(method_name)
-        return peft_method_class.loadPeftConfig(config)
+    def create_peft_method(model, config: Dict) -> PEFT:
+        config = LoRA.loadPeftConfig(config)
+        return LoRA.loadPeftModel(model,config)
