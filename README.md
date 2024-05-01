@@ -41,4 +41,4 @@ Parameter-Efficient Fine-Tuning (PEFT) techniques are a set of methods that perf
 
 ## Project Presentation
 
-The project presentation can be found [here]([PRESENTATION_LINK](https://www.canva.com/design/DAGCLpb2Se0/nr2fc_PqIZDTa4UG9LINeQ/edit)).
+The project presentation can be found ([PRESENTATION_LINK](https://www.canva.com/design/DAGCLpb2Se0/nr2fc_PqIZDTa4UG9LINeQ/edit)).
