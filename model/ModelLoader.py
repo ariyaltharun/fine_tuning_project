@@ -5,7 +5,7 @@ from transformers import (
 )
 class ModelLoader:
   @staticmethod
-  def load_tokenizer(model_type,dataset=None):
+  def load_model(model_type,dataset=None):
     """
     Loads a tokenizer corresponding to the specified model type.
 
