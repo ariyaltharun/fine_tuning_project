@@ -9,7 +9,7 @@ class IDatasetLoader(ABC):
 
 
 class ImageDatasetLoader(IDatasetLoader):
-    def __init__(self, dataset_name="food101", split="train[:5000]"):
+    def __init__(self, dataset_name="food101", split = None):
         """
         Initializes the DatasetLoader with the specified dataset name and split configuration.
         :param dataset_name: The name of the dataset to load.
