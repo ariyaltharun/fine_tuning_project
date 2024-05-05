@@ -76,7 +76,7 @@ if model_name == "Vision Transformer":
         
         if train_button:
             with st.spinner("Training in progress..."):
-                data = dataset.DatasetFactory.get_dataset(model_name)
+                data = dataset.DatasetFactory.get_dataset(model_name,split = "train[:5000]")
                 parameter = {
                     "r": r,
                     "lora_alpha": lora_alpha,
