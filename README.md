@@ -23,6 +23,14 @@ Parameter-Efficient Fine-Tuning (PEFT) techniques are a set of methods that perf
 - Pooja Kulkarni
 - Sujal Singh
 
+## Video Tutorial
+
+https://github.com/Siddharth133/fine_tuning_project/assets/99598353/35eb0719-fcf1-4276-8efe-3d2c50e9f039
+
+https://github.com/Siddharth133/fine_tuning_project/assets/99598353/4c6f6ab2-a565-4f28-a2be-1d7be75197a2
+
+
+
 ## Project Deliverables
 
 1. A theoretical study on PEFT techniques, including their functionalities, advantages, and limitations.
