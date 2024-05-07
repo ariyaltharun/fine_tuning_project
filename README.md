@@ -48,15 +48,19 @@ The project presentation can be found ([PRESENTATION_LINK](https://www.canva.com
 ## Video Tutorial
 
 ### Vision_Model Video 
-https://github.com/Siddharth133/fine_tuning_project/assets/99598353/35eb0719-fcf1-4276-8efe-3d2c50e9f039
+
+https://github.com/Siddharth133/fine_tuning_project/assets/99598353/83b0d493-9f87-4df4-8b9c-71ee24734d9c
+
 
 ### Final output over the UI
+
 ![image](https://github.com/Siddharth133/fine_tuning_project/assets/99598353/07c214e9-094c-40ea-8264-9a8f4654aa1f)
 
+### Bert_Model Video 
 
-### Vision_Model Video 
-https://github.com/Siddharth133/fine_tuning_project/assets/99598353/4c6f6ab2-a565-4f28-a2be-1d7be75197a2
+https://github.com/Siddharth133/fine_tuning_project/assets/99598353/350722c3-c55a-434c-a82b-cdbe5b3d1cbb
 
 ### Final output over the UI
+
 ![image](https://github.com/Siddharth133/fine_tuning_project/assets/99598353/555a909a-71f0-4ce8-9f1d-0f3b25c1a00f)
 
