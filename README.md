@@ -23,12 +23,6 @@ Parameter-Efficient Fine-Tuning (PEFT) techniques are a set of methods that perf
 - Pooja Kulkarni
 - Sujal Singh
 
-## Video Tutorial
-
-
-https://github.com/Siddharth133/fine_tuning_project/assets/99598353/b9cf8630-0650-493e-af8d-8a0c544de6df
-
-https://github.com/Siddharth133/fine_tuning_project/assets/99598353/568783bc-bee6-4722-ad65-faf889fb5a7a
 
 ## Project Deliverables
 
@@ -49,3 +43,23 @@ https://github.com/Siddharth133/fine_tuning_project/assets/99598353/568783bc-bee
 ## Project Presentation
 
 The project presentation can be found ([PRESENTATION_LINK](https://www.canva.com/design/DAGCLpb2Se0/nr2fc_PqIZDTa4UG9LINeQ/edit)).
+
+
+## Video Tutorial
+
+### Vision_Model Video 
+
+https://github.com/Siddharth133/fine_tuning_project/assets/99598353/83b0d493-9f87-4df4-8b9c-71ee24734d9c
+
+
+### Final output over the UI
+
+![image](https://github.com/Siddharth133/fine_tuning_project/assets/99598353/07c214e9-094c-40ea-8264-9a8f4654aa1f)
+
+### Bert_Model Video 
+
+https://github.com/Siddharth133/fine_tuning_project/assets/99598353/350722c3-c55a-434c-a82b-cdbe5b3d1cbb
+
+### Final output over the UI
+
+![image](https://github.com/Siddharth133/fine_tuning_project/assets/99598353/555a909a-71f0-4ce8-9f1d-0f3b25c1a00f)
