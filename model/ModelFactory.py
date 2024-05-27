@@ -15,8 +15,8 @@ class ModelFactory:
     """
 
     if model_type == "vision_transformer":
-      return ModelLoader.load_tokenizer(model_type,dataset)
+      return ModelLoader.load_model(model_type,dataset)
     elif model_type == "bert":
-      return  ModelLoader.load_tokenizer(model_type)
+      return  ModelLoader.load_model(model_type)
     else:
       raise ValueError(f"Unknown model type: {model_type}")
