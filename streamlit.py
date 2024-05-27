@@ -5,14 +5,15 @@ import hyper_parameters
 import train
 import preprocessing
 import peft_techniques
-
+import torch 
+from transformers import BertForSequenceClassification, AdamW, BertConfig,BertTokenizer,get_linear_schedule_with_warmup,DistilBertTokenizer
 st.title("Model Training Configuration")
 
 st.header("Model Configuration")
 
 model_name = st.selectbox("Select the Model", ["", "BERT", "Vision Transformer"])
 
-type_of_fine_tuning = st.selectbox("Select the type of fine-tuning method", ["", "LoRA", "QLoRA", "Without Peft"])
+type_of_fine_tuning = st.selectbox("Select the type of fine-tuning method", ["", "LoRA", "QLoRA", "Without Peft","Custom LoRA"])
 
 if model_name == "BERT":
     st.subheader("BERT Model Parameters")
@@ -30,7 +31,7 @@ if model_name == "BERT":
         
         if train_button:
             with st.spinner("Training in progress..."):
-                data = dataset.DatasetFactory.get_dataset("bert")
+                data,_ = dataset.DatasetFactory.get_dataset("bert")
                 parameter = {
                     "r": r,
                     "lora_alpha": lora_alpha,
@@ -59,6 +60,38 @@ if model_name == "BERT":
 
                 st.success("Training completed!")
                 st.write("Training Results:", train_results)
+
+    if type_of_fine_tuning == "Custom LoRA":
+        lora_alpha = st.number_input("Custom LoRA Alpha", value=32, min_value=1)
+        lora_dropout = st.number_input("Custom LoRA Dropout", value=0.01)
+        r = st.number_input("Custom LoRA Rank (R)", value=4, min_value=1)
+        train_button = st.button("Start Training")
+
+        if(train_button):
+            with st.spinner("Training in progress..."):
+                _,data = dataset.DatasetFactory.get_dataset("bert")
+                parameter = {
+                    "r": r,
+                    "lora_alpha": lora_alpha,
+                    "lora_dropout": lora_dropout,
+                }
+                gen_params = {
+                    "batch_size": per_device_train_batch_size,
+                    "learning_rate": learning_rate,
+                    "num_train_epochs": num_train_epochs,
+                }
+                tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased', do_lower_case=True)
+                bert_model = torch.load('tests/bert_model')
+                processor = preprocessing.PreprocessingFactory("bert-base-uncased")
+                train_ds,val_ds = processor.get_tweet_preprocessor(data)
+                lora_model = peft_techniques.PeftFactory.get_custom_lora(bert_model, parameter)
+
+                trainer = train.TrainFactory.get_trainer_custom_lora(bert_model, gen_params, train_ds, val_ds, tokenizer)
+                train_results = trainer.train()
+
+                st.success("Training completed!")
+                st.write("Training Results:", train_results)
+
 
 if model_name == "Vision Transformer":
     st.subheader("Vision Transformers Model Parameters")

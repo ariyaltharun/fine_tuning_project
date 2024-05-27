@@ -4,7 +4,8 @@ from transformers import (
     AutoTokenizer,
     DataCollatorWithPadding
 )
-
+import torch
+from torch.utils.data import TensorDataset, random_split
 from torchvision.transforms import (
     CenterCrop,
     Compose,
@@ -14,6 +15,7 @@ from torchvision.transforms import (
     Resize,
     ToTensor,
 )
+from transformers import BertForSequenceClassification, AdamW, BertConfig,BertTokenizer,get_linear_schedule_with_warmup,DistilBertTokenizer
 
 class ImagePreprocessor:
     def __init__(self, model_checkpoint):
@@ -88,3 +90,43 @@ class TextPreprocessing:
 
         tokenized_dataset = dataset.map(tokenize_function, batched=True)
         return tokenized_dataset
+
+
+class tweet_preprocessor:
+        def __init__(self, model_checkpoint) -> None:
+            self.preprocessor = None
+            self.tokenizer =  DistilBertTokenizer.from_pretrained('distilbert-base-uncased', do_lower_case=True)
+        
+        def get_tokenizer(self):
+                return self.tokenizer
+
+        def get_tokenized_dataset(self, dataset: DatasetDict) -> DatasetDict:
+            tweets = dataset.text.values
+            labels = dataset.target.values
+            input_ids = []
+            attention_masks = []
+            max_len = 0
+            for sent in tweets:
+                input_ids = self.tokenizer.encode(sent, add_special_tokens=True)
+                max_len = max(max_len, len(input_ids))
+            for tweet in tweets:
+                encoded_dict = self.tokenizer.encode_plus(
+                                    tweet,                     
+                                    add_special_tokens = True, 
+                                    max_length = max_len,      
+                                    pad_to_max_length = True,
+                                    return_attention_mask = True,
+                                    return_tensors = 'pt',     
+                            )
+   
+                input_ids.append(encoded_dict['input_ids'])
+                attention_masks.append(encoded_dict['attention_mask'])
+            input_ids = torch.cat(input_ids, dim=0)
+            attention_masks = torch.cat(attention_masks, dim=0)
+            labels = torch.tensor(labels)
+            dataset = TensorDataset(input_ids, attention_masks, labels)
+            train_size = int(0.8 * len(dataset))
+            val_size = len(dataset)  - train_size
+            train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
+            return train_dataset, val_dataset
+
