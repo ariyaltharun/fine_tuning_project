@@ -2,14 +2,10 @@ from transformers import Trainer,TrainingArguments
 import torch
 import evaluate
 import numpy as np
-<<<<<<< HEAD
 from transformers import AdamW, get_linear_schedule_with_warmup
 from torch.utils.data import  DataLoader, RandomSampler, SequentialSampler
 import datetime
 import time
-=======
-
->>>>>>> a8daaa9bd638e6b8aa498683839a02afc259c671
 metric = evaluate.load("accuracy")
 
 class TrainLoader:
