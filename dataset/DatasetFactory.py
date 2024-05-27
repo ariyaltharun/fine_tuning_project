@@ -15,6 +15,5 @@ class DatasetFactory:
             loader = TextDatasetLoader("sg247/binary-classification")
             dataset_tweet = TweetDatasetLoader("Tweet_of_Disaster")
             return loader.get_dataset(),dataset_tweet.get_dataset()
-        
         else:
             raise ValueError("Unknown model type")

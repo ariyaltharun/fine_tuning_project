@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from datasets import load_dataset
 import pandas as pd
 
+
 class IDatasetLoader(ABC):
     @abstractmethod
     def get_dataset(self):
