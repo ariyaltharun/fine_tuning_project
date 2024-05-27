@@ -32,6 +32,10 @@ Parameter-Efficient Fine-Tuning (PEFT) techniques are a set of methods that perf
 4. A minimal user experience demonstrating the Plugin framework capabilities.
 5. A basic graphical UI using Streamlit.
 
+## Architecture
+![image](https://github.com/Siddharth133/fine_tuning_project/assets/99598353/74a2d722-2a57-4f5c-8460-5866813f6d0b)
+
+
 ## OOD Design of the Project
 ![Work breakdown structure - Frame 2](https://github.com/Siddharth133/fine_tuning_project/assets/99598353/8248650f-0197-4b43-89c6-1a1a1d702cec)
 
