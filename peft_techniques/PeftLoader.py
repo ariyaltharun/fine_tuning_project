@@ -4,7 +4,6 @@ from typing import List, Dict
 from peft import LoraConfig, get_peft_model
 import torch.nn as nn
 import torch
-
 # Abstract Base Class for PEFT
 class PEFT(ABC):
     @property
@@ -90,8 +89,8 @@ class Custom_Lora(PEFT):
             if lora_mlp:
                 layer.ffn.lin1 = assign_lora(layer.ffn.lin1)
                 layer.ffn.lin2 = assign_lora(layer.ffn.lin2)
-            if lora_head:
-                model.pre_classifier = assign_lora(model.pre_classifier)
-                model.classifier = assign_lora(model.classifier)
+        if lora_head:
+            model.pre_classifier = assign_lora(model.pre_classifier)
+            model.classifier = assign_lora(model.classifier)
 
         return model

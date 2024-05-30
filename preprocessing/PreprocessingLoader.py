@@ -108,8 +108,8 @@ class tweet_preprocessor:
             attention_masks = []
             max_len = 0
             for sent in tweets:
-                input_ids = self.tokenizer.encode(sent, add_special_tokens=True)
-                max_len = max(max_len, len(input_ids))
+                encoded_input_ids = self.tokenizer.encode(sent, add_special_tokens=True)
+                max_len = max(max_len, len(encoded_input_ids))
             for tweet in tweets:
                 encoded_dict = self.tokenizer.encode_plus(
                                     tweet,                     
@@ -120,7 +120,7 @@ class tweet_preprocessor:
                                     return_tensors = 'pt',     
                             )
    
-                input_ids.append(encoded_dict['input_ids'])
+                input_ids.append(encoded_dict['input_ids'].unsqueeze(0))
                 attention_masks.append(encoded_dict['attention_mask'])
             input_ids = torch.cat(input_ids, dim=0)
             attention_masks = torch.cat(attention_masks, dim=0)

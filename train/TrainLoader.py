@@ -118,6 +118,7 @@ class TrainLoaderCustomLora:
         self.tokenizer = tokenizer
     def train(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.model.to(device)
         batch_size = self.args['batch_size']
         train_dataloader = DataLoader(
                     self.train_dataset,  
@@ -125,8 +126,8 @@ class TrainLoaderCustomLora:
                     batch_size = batch_size 
                 )
         validation_dataloader = DataLoader(
-                    self.val_dataset, 
-                    sampler = SequentialSampler(self.val_dataset), 
+                    self.eval_dataset, 
+                    sampler = SequentialSampler(self.eval_dataset), 
                     batch_size = batch_size
                 )
         optimizer = AdamW(self.model.parameters(),
