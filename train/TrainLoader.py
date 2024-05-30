@@ -162,9 +162,9 @@ class TrainLoaderCustomLora:
             total_train_loss = 0
             self.model.train()
             for step, batch in enumerate(train_dataloader):
-                b_input_ids = batch[0].to(device)
-                b_input_mask = batch[1].to(device)
-                b_labels = batch[2].to(device)
+                b_input_ids = batch[0].to(device).squeeze(1) # [batch_size, input_id_size]
+                b_input_mask = batch[1].to(device) # [batch_size, input_mask_size]
+                b_labels = batch[2].to(device) # [batch_size]
                 optimizer.zero_grad()
                 output = self.model(b_input_ids, 
                                     attention_mask=b_input_mask, 
@@ -192,9 +192,9 @@ class TrainLoaderCustomLora:
             best_eval_accuracy = 0
             total_eval_loss = 0
             for batch in validation_dataloader:
-                b_input_ids = batch[0].to(device)
-                b_input_mask = batch[1].to(device)
-                b_labels = batch[2].to(device)
+                b_input_ids = batch[0].to(device).squeeze(1) # [batch_size, input_id_size]
+                b_input_mask = batch[1].to(device) # [batch_size, input_mask_size]
+                b_labels = batch[2].to(device) # [batch_size]
                 with torch.no_grad():        
                     output = self.model(b_input_ids, 
                                         attention_mask=b_input_mask,

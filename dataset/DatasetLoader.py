@@ -69,7 +69,7 @@ class TweetDatasetLoader(IDatasetLoader):
         :return: The loaded dataset.
         """
         try:
-            dataset = pd.read_csv("../tests/train.csv")
+            dataset = pd.read_csv("tests/train.csv")
             return dataset
         except Exception as e:
             print(f"Failed to load dataset: {e}")

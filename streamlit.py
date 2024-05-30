@@ -6,7 +6,17 @@ import train
 import preprocessing
 import peft_techniques
 import torch 
-from transformers import BertForSequenceClassification, AdamW, BertConfig,BertTokenizer,get_linear_schedule_with_warmup,DistilBertTokenizer
+from transformers import (
+    AutoModelForSequenceClassification,
+    BertForSequenceClassification,
+    AdamW,
+    BertConfig,
+    BertTokenizer,
+    get_linear_schedule_with_warmup,
+    DistilBertTokenizer
+)
+
+
 st.title("Model Training Configuration")
 
 st.header("Model Configuration")
@@ -81,12 +91,18 @@ if model_name == "BERT":
                     "num_train_epochs": num_train_epochs,
                 }
                 tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased', do_lower_case=True)
-                bert_model = torch.load('tests/bert_model')
+
+                ################################# This piece of code must be placed in train package #################################
+                bert_model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=2)
+                for param in bert_model.parameters():
+                    param.requires_grad = False
+                ########################################################################################################################
+
                 processor = preprocessing.PreprocessingFactory("bert-base-uncased")
                 train_ds,val_ds = processor.get_tweet_preprocessor(data)
                 lora_model = peft_techniques.PeftFactory.get_custom_lora(bert_model, parameter)
 
-                trainer = train.TrainFactory.get_trainer_custom_lora(bert_model, gen_params, train_ds, val_ds, tokenizer)
+                trainer = train.TrainFactory.get_trainer_custom_lora(lora_model, gen_params, train_ds, val_ds, tokenizer)
                 train_results = trainer.train()
 
                 st.success("Training completed!")
